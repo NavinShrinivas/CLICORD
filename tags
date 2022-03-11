@@ -17,4 +17,5 @@ main	client/main.go	/^func main(){$/;"	f	package:main
 main	client/main.go	/^package main$/;"	p
 main	server/server.go	/^func main(){$/;"	f	package:main
 main	server/server.go	/^package main$/;"	p
+ping_server	client/main.go	/^func ping_server(){$/;"	f	package:main
 upgrader	server/server.go	/^var upgrader = websocket.Upgrader{$/;"	v	package:main

@@ -17,8 +17,8 @@ var upgrader = websocket.Upgrader{
 
 func Echo_server(w http.ResponseWriter, r *http.Request){
     //a websocket connection is done using "conn" which is recvd from HTTP
-    //so we are using port 80 for all our trasanctions
-    //To make HTTP connections we need an "Upgrader"
+    //so we are using port 8080 for all our init connection
+    //To make ws connections we need an "Upgrader"
     conn,err := upgrader.Upgrade(w,r,nil);
     //https://pkg.go.dev/github.com/gorilla/websocket#Upgrader.Upgrade
     //last nil for telling the header on the request packet is nil 
