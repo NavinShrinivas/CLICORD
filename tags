@@ -11,6 +11,8 @@
 !_TAG_PROGRAM_VERSION	5.9.0	/p5.9.20210905.0/
 CLICORD	README.md	/^# CLICORD $/;"	c
 Echo_server	server/server.go	/^func Echo_server(w http.ResponseWriter, r *http.Request){$/;"	f	package:main
+Features	README.md	/^## Features $/;"	s	chapter:CLICORD
+Ping pong server	README.md	/^### Ping pong server $/;"	S	section:CLICORD""Features
 addr	client/main.go	/^var addr = flag.String("addr", "localhost:8080", "http service address")$/;"	v	package:main
 addr	server/server.go	/^var addr = flag.String("addr", "localhost:8080", "http service address")$/;"	v	package:main
 main	client/main.go	/^func main(){$/;"	f	package:main
