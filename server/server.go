@@ -56,6 +56,3 @@ func main(){
     http.HandleFunc("/ping" , Echo_server);
     log.Fatal(http.ListenAndServe(*addr, nil))
 }
-
-
-
