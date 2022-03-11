@@ -9,13 +9,12 @@
 !_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
 !_TAG_PROGRAM_VERSION	5.9.0	/p5.9.20210905.0/
+CLICORD	README.md	/^# CLICORD $/;"	c
 Echo_server	server/server.go	/^func Echo_server(w http.ResponseWriter, r *http.Request){$/;"	f	package:main
 addr	client/main.go	/^var addr = flag.String("addr", "localhost:8080", "http service address")$/;"	v	package:main
 addr	server/server.go	/^var addr = flag.String("addr", "localhost:8080", "http service address")$/;"	v	package:main
 main	client/main.go	/^func main(){$/;"	f	package:main
 main	client/main.go	/^package main$/;"	p
-main	main.go	/^func main(){$/;"	f	package:main
-main	main.go	/^package main $/;"	p
 main	server/server.go	/^func main(){$/;"	f	package:main
 main	server/server.go	/^package main$/;"	p
 upgrader	server/server.go	/^var upgrader = websocket.Upgrader{$/;"	v	package:main
