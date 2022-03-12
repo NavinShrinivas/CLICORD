@@ -12,16 +12,17 @@
 CLICORD	README.md	/^# CLICORD $/;"	c
 Features	README.md	/^## Features $/;"	s	chapter:CLICORD
 Helloworld	client/lobby_funcs.go	/^func Helloworld(){$/;"	f	package:main
-Helloworld	client/msg_funcs.go	/^func Helloworld(){$/;"	f	package:main
+Lobby_main	server/lobby_funcs.go	/^func Lobby_main(w http.ResponseWriter, r *http.Request){$/;"	f	package:main
 Ping pong server	README.md	/^### Ping pong server $/;"	S	section:CLICORD""Features
 Ping_server	client/ping_funcs.go	/^func Ping_server(){$/;"	f	package:main
 Ping_server	server/ping_funcs.go	/^func Ping_server(w http.ResponseWriter, r *http.Request){$/;"	f	package:main
+active_conn	server/server.go	/^var active_conn = make(map[*websocket.Conn]int);$/;"	v	package:main
 addr	client/main.go	/^var addr = flag.String("addr", "localhost:8080", "http service address")$/;"	v	package:main
 addr	server/server.go	/^var addr = flag.String("addr", "localhost:8080", "http service address")$/;"	v	package:main
+init_funcs	server/lobby_funcs.go	/^func init_funcs(w http.ResponseWriter, r *http.Request){$/;"	f	package:main
 main	client/lobby_funcs.go	/^package main$/;"	p
 main	client/main.go	/^func main(){$/;"	f	package:main
 main	client/main.go	/^package main$/;"	p
-main	client/msg_funcs.go	/^package main$/;"	p
 main	client/ping_funcs.go	/^package main$/;"	p
 main	server/lobby_funcs.go	/^package main $/;"	p
 main	server/ping_funcs.go	/^package main$/;"	p
