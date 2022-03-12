@@ -7,8 +7,8 @@ CLICORD is a cli based chat system written from scratch using websockets in go.
 ### Ping pong server 
 
 ```
-   in /client : $ go run . ping 
-   in /server : $ go run
+   in /client : $ go run *.go ping 
+   in /server : $ go run *.go
 ```
 
 
