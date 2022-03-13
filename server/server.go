@@ -41,8 +41,7 @@ import (
     "flag"
     "log"
     "sync"
-    "os"
-    "os/signal"
+    "github.com/gorilla/mux"
 )
 
 //----------globals----------
@@ -58,32 +57,34 @@ var addr = flag.String("addr", "0.0.0.0:80", "http service address")
 
 //for port fwding : https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers
 
+var wait_group sync.WaitGroup; 
 
-//Before : for no public rollout 2048 connections should be plenty
-var active_conn = make(map[*websocket.Conn]int);
-//After : Keeping the the ds as array makes it linear time for adding and deleting 
+type LobbyData struct{
+    active_conn map[*websocket.Conn]int
+    realtime_msg chan string
+}
+
+//Keeping the the ds as array makes it linear time for adding and deleting 
 //connections, which imo happens all the time 
 //hence a HashMap can do this in constant time, and also removes all restrictions 
 //on number of maintained connections
-
 //Concurrency channels
-var realtime_msg = make(chan string); //handle passing of messages in real time around, considering 
 //to be an atomic process
 //https://medium.com/@thejasbabu/concurrency-in-go-e4a61ec96491
 
-var wait_group sync.WaitGroup;
+var lobby_data = make(map[string]*LobbyData); //for n number of lobbies
 
-var interrupt = make(chan os.Signal,1);
 //----------End of globals----------
 
 
 func main(){
     //https://pkg.go.dev/net/http#ServeMux.HandleFunc
     //HandleFunc provides the write and reader for HTTP
-    signal.Notify(interrupt,os.Interrupt);
     log.Print("Starting server...");
-    http.HandleFunc("/ping" , PingServer);
-    http.HandleFunc("/lobby1" , LobbyServer);
+    r := mux.NewRouter();
+    r.HandleFunc("/ping" , PingServer);
+    r.HandleFunc("/lobby/{lobby_id}" , LobbyServer);
+    http.Handle("/",r);
     log.Fatal(http.ListenAndServe(*addr, nil))
 
 }

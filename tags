@@ -9,14 +9,16 @@
 !_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
 !_TAG_PROGRAM_VERSION	5.9.0	/p5.9.20210905.0/
-AddConn	server/lobby_funcs.go	/^func AddConn(conn *websocket.Conn){$/;"	f	package:main
+AddConn	server/lobby_funcs.go	/^func AddConn(conn *websocket.Conn, active_conn map[*websocket.Conn]int){$/;"	f	package:main
 AppendNode	client/lobby_funcs.go	/^func AppendNode(msg string, list *List){$/;"	f	package:main
 CLICORD	README.md	/^# CLICORD $/;"	c
+CreateOrFetch	server/lobby_funcs.go	/^func CreateOrFetch(lobby_id string) (chan string, map[*websocket.Conn]int){$/;"	f	package:main	typeref:typename:(chan string, map[*websocket.Conn]int)
 Features	README.md	/^## Features $/;"	s	chapter:CLICORD
-HandleMessages	server/lobby_funcs.go	/^func HandleMessages(){$/;"	f	package:main
-InitFunc	server/lobby_funcs.go	/^func InitFunc(w http.ResponseWriter, r *http.Request){$/;"	f	package:main
+HandleMessages	server/lobby_funcs.go	/^func HandleMessages(realtime_msg chan string, active_conn map[*websocket.Conn]int){$/;"	f	package:main
+InitFunc	server/lobby_funcs.go	/^func InitFunc(w http.ResponseWriter, r *http.Request, realtime_msg chan string, active_conn map[/;"	f	package:main
 List	client/main.go	/^type List struct{$/;"	s	package:main
-LobbyMain	client/lobby_funcs.go	/^func LobbyMain() *websocket.Conn{$/;"	f	package:main	typeref:typename:*websocket.Conn
+LobbyData	server/server.go	/^type LobbyData struct{$/;"	s	package:main
+LobbyMain	client/lobby_funcs.go	/^func LobbyMain(lobby_id string) *websocket.Conn{$/;"	f	package:main	typeref:typename:*websocket.Conn
 LobbyServer	server/lobby_funcs.go	/^func LobbyServer(w http.ResponseWriter, r *http.Request){$/;"	f	package:main
 MsgStruct	client/main.go	/^type MsgStruct struct{$/;"	s	package:main
 Node	client/main.go	/^type Node struct{$/;"	s	package:main
@@ -24,15 +26,15 @@ Ping pong server	README.md	/^### Ping pong server $/;"	S	section:CLICORD""Featur
 PingServer	client/ping_funcs.go	/^func PingServer(){$/;"	f	package:main
 PingServer	server/ping_funcs.go	/^func PingServer(w http.ResponseWriter, r *http.Request){$/;"	f	package:main
 PrintNode	client/lobby_funcs.go	/^func PrintNode(list *List){$/;"	f	package:main
-PushMessages	server/lobby_funcs.go	/^func PushMessages(new_msg string){$/;"	f	package:main
+PushMessages	server/lobby_funcs.go	/^func PushMessages(new_msg string, realtime_msg chan string, active_conn map[*websocket.Conn]int)/;"	f	package:main
 RecieveMessages	client/lobby_funcs.go	/^func RecieveMessages(conn *websocket.Conn){$/;"	f	package:main
 SendMessages	client/lobby_funcs.go	/^func SendMessages(conn *websocket.Conn){$/;"	f	package:main
-active_conn	server/server.go	/^var active_conn = make(map[*websocket.Conn]int);$/;"	v	package:main
+active_conn	server/server.go	/^    active_conn map[*websocket.Conn]int$/;"	m	struct:main.LobbyData	typeref:typename:map[*websocket.Conn]int
 addr	client/main.go	/^var addr = flag.String("addr", "localhost:80", "http service address")$/;"	v	package:main
 addr	server/server.go	/^var addr = flag.String("addr", "0.0.0.0:80", "http service address")$/;"	v	package:main
 head	client/main.go	/^    head *Node$/;"	m	struct:main.List	typeref:typename:*Node
-interrupt	server/server.go	/^var interrupt = make(chan os.Signal,1);$/;"	v	package:main
 key	client/main.go	/^    key string $/;"	m	struct:main.Node	typeref:typename:string
+lobby_data	server/server.go	/^var lobby_data = make(map[string]*LobbyData); \/\/for n number of lobbies$/;"	v	package:main
 main	client/lobby_funcs.go	/^package main$/;"	p
 main	client/main.go	/^func main(){$/;"	f	package:main
 main	client/main.go	/^package main$/;"	p
@@ -44,8 +46,8 @@ main	server/server.go	/^package main$/;"	p
 msg_content	client/main.go	/^    msg_content string$/;"	m	struct:main.MsgStruct	typeref:typename:string
 msg_list	client/main.go	/^var msg_list = &List{$/;"	v	package:main
 next	client/main.go	/^    next *Node $/;"	m	struct:main.Node	typeref:typename:*Node
-realtime_msg	server/server.go	/^var realtime_msg = make(chan string); \/\/handle passing of messages in real time around, consid/;"	v	package:main
+realtime_msg	server/server.go	/^    realtime_msg chan string$/;"	m	struct:main.LobbyData	typeref:typename:chan string
 upgrader	server/server.go	/^var upgrader = websocket.Upgrader{$/;"	v	package:main
 username	client/main.go	/^    username string$/;"	m	struct:main.MsgStruct	typeref:typename:string
 wait_group	client/main.go	/^var wait_group sync.WaitGroup; \/\/for async functions, needs to be global$/;"	v	package:main	typeref:typename:sync.WaitGroup
-wait_group	server/server.go	/^var wait_group sync.WaitGroup;$/;"	v	package:main	typeref:typename:sync.WaitGroup
+wait_group	server/server.go	/^var wait_group sync.WaitGroup; $/;"	v	package:main	typeref:typename:sync.WaitGroup

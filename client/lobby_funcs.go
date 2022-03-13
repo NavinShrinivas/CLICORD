@@ -38,10 +38,11 @@ import (
     "time"
 )
 
-func LobbyMain() *websocket.Conn{
-    //Build URL for connection endpoint  : /lobby1
-    url_obj := url.URL{Scheme: "ws", Host: *addr, Path: "/lobby1"} ;
-    log.Print("Connection to : ",url_obj,".... Trying to connect to lobby1 \n");
+func LobbyMain(lobby_id string) *websocket.Conn{
+    //Build URL for connection endpoint  : /lobby 
+    var endpoint = "/lobby/"+lobby_id; 
+    url_obj := url.URL{Scheme: "ws", Host: *addr, Path:endpoint} ;
+    log.Print("Connection to : ",url_obj,".... Trying to connect to ",lobby_id," \n");
     time.Sleep(4*time.Second);
     conn, _, err := websocket.DefaultDialer.Dial(url_obj.String(), nil);
     fmt.Print("Connection Succesfull. Press ENTER to continue");

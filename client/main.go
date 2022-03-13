@@ -78,8 +78,9 @@ func main(){
     if args[1] == "ping"{
         PingServer();
     }
-    if args[1] == "lobby1"{
-        conn:= LobbyMain(); //connection established in this function
+    if args[1] == "lobby"{
+        var lobby_id = args[2];
+        conn:= LobbyMain(lobby_id); //connection established in this function
         wait_group.Add(1);
         go SendMessages(conn);
         go RecieveMessages(conn);
