@@ -4,6 +4,7 @@ import "github.com/gorilla/websocket"
 import "net/http"
 import "flag"
 import "log"
+import "sync"
 
 //----------globals----------
 
@@ -25,15 +26,21 @@ var active_conn = make(map[*websocket.Conn]int);
 //hence a HashMap can do this in constant time, and also removes all restrictions 
 //on number of maintained connections
 
+//Concurrency channels, damn threading is so ez in go!! 
+var realtime_msg = make(chan string);
+//https://medium.com/@thejasbabu/concurrency-in-go-e4a61ec96491
+
+var waitgroup sync.WaitGroup;
+
 //----------End of globals----------
 
 
 func main(){
-
     //https://pkg.go.dev/net/http#ServeMux.HandleFunc
     //HandleFunc provides the write and reader for HTTP
     log.Print("Starting server...");
     http.HandleFunc("/ping" , Ping_server);
     http.HandleFunc("/lobby1" , Lobby_main);
     log.Fatal(http.ListenAndServe(*addr, nil))
+    
 }

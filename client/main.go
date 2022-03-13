@@ -3,6 +3,7 @@ package main
 import (
     "flag"
     "os"
+    "sync"
 )
 
 
@@ -18,20 +19,36 @@ type msg_struct struct{
     username string
 }
 
+var waitgroup sync.WaitGroup; //for async functions, needs to be global
+
+//TUI Sutff : 
+type Node struct{
+    key string 
+    next *Node 
+}
+type List struct{
+    head *Node
+}
+
+var msg_list = &List{
+    head : nil,
+}
 
 //----------End of Globals----------
-
-
-
 
 func main(){
     args := os.Args
     if args[1] == "ping"{
-        Helloworld();
         Ping_server();
     }
-    if args[1] == "connect_lobby"{
-        //var lobby = args[2] 
-
+    if args[1] == "lobby1"{
+        //var lobby = args[2]
+        conn:= LobbyMain();
+        waitgroup.Add(1);
+        go SendMessages(conn);
+        go RecieveMessages(conn);
+        waitgroup.Wait();
+        //https://stackoverflow.com/questions/24425987/why-is-my-goroutine-not-executedS
+        //explains go routine really quickly
     }
 }
