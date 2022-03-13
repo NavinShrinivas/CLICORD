@@ -1,36 +1,72 @@
+/**********************************************************************************
+  ____ _     ___ ____ ___  ____  ____  
+ / ___| |   |_ _/ ___/ _ \|  _ \|  _ \ 
+| |   | |    | | |  | | | | |_) | | | |
+| |___| |___ | | |__| |_| |  _ <| |_| |
+ \____|_____|___\____\___/|_| \_\____/ 
+                                       
+Copyright (c) 2021  CLICORD
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+**********************************************************************************/
+
 package main
 
 import (
-	"log"
-	"net/url"
-	"github.com/gorilla/websocket"
+    "log"
+    "net/url"
+    "github.com/gorilla/websocket"
     "fmt"
     "bufio"
     "os"
+    "time"
 )
 
 func LobbyMain() *websocket.Conn{
+    //Build URL for connection endpoint  : /lobby1
     url_obj := url.URL{Scheme: "ws", Host: *addr, Path: "/lobby1"} ;
     log.Print("Connection to : ",url_obj,".... Trying to connect to lobby1 \n");
+    time.Sleep(4*time.Second);
     conn, _, err := websocket.DefaultDialer.Dial(url_obj.String(), nil);
-    
+    fmt.Print("Connection Succesfull. Press ENTER to continue");
+    fmt.Scanln();
+    fmt.Print("\033c\n")
     if err!=nil{
-        log.Print("Error from trying to connnect : ",err);
+        log.Print("Connection Error : ",err);
     }
     return conn
 }
 
 func SendMessages(conn *websocket.Conn){
-    // this has to be rewritten as all this is front and ive written basiccc 
-    //just to test
+    //Basic UI, just printing. Will need improvements very soon. 
     for{
         fmt.Print("Enter message to send : ")
         var msg string
         scanner := bufio.NewScanner(os.Stdin)
         scanner.Scan() 
         msg = scanner.Text()
-        //like C, go has problems with space
-        conn.WriteMessage(websocket.TextMessage , []byte(msg));
+        //like C, go has problems with spaces in input as well
+        err := conn.WriteMessage(websocket.TextMessage , []byte(msg));
+        if err!=nil{
+            fmt.Println("Something went wrong on our end. May be you are giving really weird chars?")
+            wait_group.Done();
+        }
     }
 }
 
@@ -39,7 +75,7 @@ func RecieveMessages(conn *websocket.Conn){
         _,message,err := conn.ReadMessage();
         if err != nil{
             log.Print("Read error : ",err);
-            waitgroup.Done();
+            wait_group.Done();
             break;
         }
         fmt.Print("\033c\n")
@@ -50,11 +86,11 @@ func RecieveMessages(conn *websocket.Conn){
     }
 }
 
-
-
-//If we have better TUI we can scrape these parts off : 
+//If we have better DB we maybe able to scrape these funs off: 
 
 func AppendNode(msg string, list *List){
+
+    //Can be rewritten so much better, But it does get the job done
     var copy_list = list;
     if copy_list.head == nil{
         copy_list.head = &Node{
@@ -80,4 +116,3 @@ func PrintNode(list *List){
         copy_nodes = copy_nodes.next;
     }
 }
-

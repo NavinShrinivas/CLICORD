@@ -1,3 +1,39 @@
+/**********************************************************************************
+  ____ _     ___ ____ ___  ____  ____  
+ / ___| |   |_ _/ ___/ _ \|  _ \|  _ \ 
+| |   | |    | | |  | | | | |_) | | | |
+| |___| |___ | | |__| |_| |  _ <| |_| |
+ \____|_____|___\____\___/|_| \_\____/ 
+                                       
+Copyright (c) 2021  CLICORD
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+**********************************************************************************/
+//Coding Style : 
+/*
+ *All functions follow PascalCase : Why? GOLANG complies with this 
+ *All variables follow snake_case : Cus these kind of naming makes sense
+ *All types follow PascalCase too : Look more uniform
+ *To indent if on vim do : gg=G, if not leave it to the ones with vim
+ *
+ */
+
 package main
 
 import (
@@ -5,23 +41,24 @@ import (
     "os"
     "sync"
 )
-
-
-
 //----------globals----------
-//As NSK would say explain why global? 
-// This address is the constatnt address for the server, and use in every function
 
+// This address is the constatnt address for the server, and use in every function
 var addr = flag.String("addr", "localhost:80", "http service address")
 
-type msg_struct struct{
+//messgae structure, needs a lot more config to work.
+type MsgStruct struct{
     msg_content string
     username string
 }
 
-var waitgroup sync.WaitGroup; //for async functions, needs to be global
+var wait_group sync.WaitGroup; //for async functions, needs to be global
 
-//TUI Sutff : 
+//TUI and UI Sutff : 
+
+//message managment , will also help with database operations
+//impl for these struct are not bound the the struct, this can and has to be done
+//evetually
 type Node struct{
     key string 
     next *Node 
@@ -33,21 +70,20 @@ type List struct{
 var msg_list = &List{
     head : nil,
 }
-
 //----------End of Globals----------
+
 
 func main(){
     args := os.Args
     if args[1] == "ping"{
-        Ping_server();
+        PingServer();
     }
     if args[1] == "lobby1"{
-        //var lobby = args[2]
-        conn:= LobbyMain();
-        waitgroup.Add(1);
+        conn:= LobbyMain(); //connection established in this function
+        wait_group.Add(1);
         go SendMessages(conn);
         go RecieveMessages(conn);
-        waitgroup.Wait();
+        wait_group.Wait(); //concept very near to semaphores from os
         //https://stackoverflow.com/questions/24425987/why-is-my-goroutine-not-executedS
         //explains go routine really quickly
     }
