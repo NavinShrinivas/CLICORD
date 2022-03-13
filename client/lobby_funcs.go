@@ -17,7 +17,6 @@ func LobbyMain() *websocket.Conn{
     if err!=nil{
         log.Print("Error from trying to connnect : ",err);
     }
-    fmt.Print("\033c\n")
     return conn
 }
 

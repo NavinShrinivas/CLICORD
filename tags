@@ -26,8 +26,8 @@ RecieveMessages	client/lobby_funcs.go	/^func RecieveMessages(conn *websocket.Con
 SendMessages	client/lobby_funcs.go	/^func SendMessages(conn *websocket.Conn){$/;"	f	package:main
 active_conn	server/server.go	/^var active_conn = make(map[*websocket.Conn]int);$/;"	v	package:main
 add_conn	server/lobby_funcs.go	/^func add_conn(conn *websocket.Conn){$/;"	f	package:main
-addr	client/main.go	/^var addr = flag.String("addr", "localhost:8080", "http service address")$/;"	v	package:main
-addr	server/server.go	/^var addr = flag.String("addr", "localhost:8080", "http service address")$/;"	v	package:main
+addr	client/main.go	/^var addr = flag.String("addr", "localhost:80", "http service address")$/;"	v	package:main
+addr	server/server.go	/^var addr = flag.String("addr", "127.0.0.1:80", "http service address")$/;"	v	package:main
 head	client/main.go	/^    head *Node$/;"	m	struct:main.List	typeref:typename:*Node
 init_funcs	server/lobby_funcs.go	/^func init_funcs(w http.ResponseWriter, r *http.Request){$/;"	f	package:main
 key	client/main.go	/^    key string $/;"	m	struct:main.Node	typeref:typename:string

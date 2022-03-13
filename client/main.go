@@ -12,7 +12,7 @@ import (
 //As NSK would say explain why global? 
 // This address is the constatnt address for the server, and use in every function
 
-var addr = flag.String("addr", "localhost:8080", "http service address")
+var addr = flag.String("addr", "localhost:80", "http service address")
 
 type msg_struct struct{
     msg_content string
