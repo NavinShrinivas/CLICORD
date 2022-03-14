@@ -35,15 +35,20 @@ import (
     "fmt"
     "bufio"
     "os"
-    "time"
+    "encoding/json"
 )
 
 func LobbyMain(lobby_id string) *websocket.Conn{
     //Build URL for connection endpoint  : /lobby 
     var endpoint = "/lobby/"+lobby_id; 
+
+
+    fmt.Print("Enter user name : ")
+    fmt.Scanln(&username_glob)
+
+
     url_obj := url.URL{Scheme: "ws", Host: *addr, Path:endpoint} ;
     log.Print("Connection to : ",url_obj,".... Trying to connect to ",lobby_id," \n");
-    time.Sleep(4*time.Second);
     conn, _, err := websocket.DefaultDialer.Dial(url_obj.String(), nil);
     fmt.Print("Connection Succesfull. Press ENTER to continue");
     fmt.Scanln();
@@ -62,8 +67,14 @@ func SendMessages(conn *websocket.Conn){
         scanner := bufio.NewScanner(os.Stdin)
         scanner.Scan() 
         msg = scanner.Text()
+        msg_built := &MsgStruct{
+            Msg_content: msg,
+            Username: username_glob,
+        }
+        e, _  := json.Marshal(msg_built)
+
         //like C, go has problems with spaces in input as well
-        err := conn.WriteMessage(websocket.TextMessage , []byte(msg));
+        err := conn.WriteMessage(websocket.TextMessage , []byte(e));
         if err!=nil{
             fmt.Println("Something went wrong on our end. May be you are giving really weird chars?")
             wait_group.Done();
@@ -95,7 +106,7 @@ func AppendNode(msg string, list *List){
     var copy_list = list;
     if copy_list.head == nil{
         copy_list.head = &Node{
-            key: msg,
+            Key: msg,
             next: nil,
         }
         return
@@ -105,7 +116,7 @@ func AppendNode(msg string, list *List){
         copy_nodes = copy_nodes.next;
     }
     copy_nodes.next = &Node{
-        key : msg,
+        Key : msg,
         next: nil,
     }
 }
@@ -113,7 +124,13 @@ func AppendNode(msg string, list *List){
 func PrintNode(list *List){
     copy_nodes := list.head;
     for copy_nodes != nil{
-        fmt.Println(copy_nodes.key);
+        var msgstruct MsgStruct;
+        var json_str = copy_nodes.Key;
+        marshal_err := json.Unmarshal([]byte(json_str),&msgstruct)
+        if marshal_err!=nil{
+            log.Println("Something went wrong, Unmarshal err.");
+        }
+        fmt.Println( msgstruct.Username,":",msgstruct.Msg_content);
         copy_nodes = copy_nodes.next;
     }
 }

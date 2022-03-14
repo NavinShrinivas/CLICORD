@@ -16,11 +16,13 @@ CreateOrFetch	server/lobby_funcs.go	/^func CreateOrFetch(lobby_id string) (chan 
 Features	README.md	/^## Features $/;"	s	chapter:CLICORD
 HandleMessages	server/lobby_funcs.go	/^func HandleMessages(realtime_msg chan string, active_conn map[*websocket.Conn]int){$/;"	f	package:main
 InitFunc	server/lobby_funcs.go	/^func InitFunc(w http.ResponseWriter, r *http.Request, realtime_msg chan string, active_conn map[/;"	f	package:main
+Key	client/main.go	/^    Key string $/;"	m	struct:main.Node	typeref:typename:string
 List	client/main.go	/^type List struct{$/;"	s	package:main
 LobbyData	server/server.go	/^type LobbyData struct{$/;"	s	package:main
 LobbyMain	client/lobby_funcs.go	/^func LobbyMain(lobby_id string) *websocket.Conn{$/;"	f	package:main	typeref:typename:*websocket.Conn
 LobbyServer	server/lobby_funcs.go	/^func LobbyServer(w http.ResponseWriter, r *http.Request){$/;"	f	package:main
 MsgStruct	client/main.go	/^type MsgStruct struct{$/;"	s	package:main
+Msg_content	client/main.go	/^    Msg_content string `json : "Msg_content"`$/;"	m	struct:main.MsgStruct	typeref:typename:string
 Node	client/main.go	/^type Node struct{$/;"	s	package:main
 Ping pong server	README.md	/^### Ping pong server $/;"	S	section:CLICORD""Features
 PingServer	client/ping_funcs.go	/^func PingServer(){$/;"	f	package:main
@@ -29,11 +31,11 @@ PrintNode	client/lobby_funcs.go	/^func PrintNode(list *List){$/;"	f	package:main
 PushMessages	server/lobby_funcs.go	/^func PushMessages(new_msg string, realtime_msg chan string, active_conn map[*websocket.Conn]int)/;"	f	package:main
 RecieveMessages	client/lobby_funcs.go	/^func RecieveMessages(conn *websocket.Conn){$/;"	f	package:main
 SendMessages	client/lobby_funcs.go	/^func SendMessages(conn *websocket.Conn){$/;"	f	package:main
+Username	client/main.go	/^    Username string `json : "Username"`$/;"	m	struct:main.MsgStruct	typeref:typename:string
 active_conn	server/server.go	/^    active_conn map[*websocket.Conn]int$/;"	m	struct:main.LobbyData	typeref:typename:map[*websocket.Conn]int
 addr	client/main.go	/^var addr = flag.String("addr", "localhost:80", "http service address")$/;"	v	package:main
 addr	server/server.go	/^var addr = flag.String("addr", "0.0.0.0:80", "http service address")$/;"	v	package:main
 head	client/main.go	/^    head *Node$/;"	m	struct:main.List	typeref:typename:*Node
-key	client/main.go	/^    key string $/;"	m	struct:main.Node	typeref:typename:string
 lobby_data	server/server.go	/^var lobby_data = make(map[string]*LobbyData); \/\/for n number of lobbies$/;"	v	package:main
 main	client/lobby_funcs.go	/^package main$/;"	p
 main	client/main.go	/^func main(){$/;"	f	package:main
@@ -43,11 +45,10 @@ main	server/lobby_funcs.go	/^package main $/;"	p
 main	server/ping_funcs.go	/^package main$/;"	p
 main	server/server.go	/^func main(){$/;"	f	package:main
 main	server/server.go	/^package main$/;"	p
-msg_content	client/main.go	/^    msg_content string$/;"	m	struct:main.MsgStruct	typeref:typename:string
 msg_list	client/main.go	/^var msg_list = &List{$/;"	v	package:main
 next	client/main.go	/^    next *Node $/;"	m	struct:main.Node	typeref:typename:*Node
 realtime_msg	server/server.go	/^    realtime_msg chan string$/;"	m	struct:main.LobbyData	typeref:typename:chan string
 upgrader	server/server.go	/^var upgrader = websocket.Upgrader{$/;"	v	package:main
-username	client/main.go	/^    username string$/;"	m	struct:main.MsgStruct	typeref:typename:string
+username_glob	client/main.go	/^var username_glob string$/;"	v	package:main	typeref:typename:string
 wait_group	client/main.go	/^var wait_group sync.WaitGroup; \/\/for async functions, needs to be global$/;"	v	package:main	typeref:typename:sync.WaitGroup
 wait_group	server/server.go	/^var wait_group sync.WaitGroup; $/;"	v	package:main	typeref:typename:sync.WaitGroup

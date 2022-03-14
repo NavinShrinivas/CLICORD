@@ -48,9 +48,10 @@ var addr = flag.String("addr", "localhost:80", "http service address")
 
 //messgae structure, needs a lot more config to work.
 type MsgStruct struct{
-    msg_content string
-    username string
+    Msg_content string `json : "Msg_content"`
+    Username string `json : "Username"`
 }
+//json library expects exported members of struct, hence capital starting
 
 var wait_group sync.WaitGroup; //for async functions, needs to be global
 
@@ -60,7 +61,7 @@ var wait_group sync.WaitGroup; //for async functions, needs to be global
 //impl for these struct are not bound the the struct, this can and has to be done
 //evetually
 type Node struct{
-    key string 
+    Key string 
     next *Node 
 }
 type List struct{
@@ -70,6 +71,10 @@ type List struct{
 var msg_list = &List{
     head : nil,
 }
+
+var username_glob string
+  
+
 //----------End of Globals----------
 
 
