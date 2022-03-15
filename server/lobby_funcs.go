@@ -84,6 +84,7 @@ func InitFunc(w http.ResponseWriter, r *http.Request, realtime_msg chan string, 
         _, message, err := conn.ReadMessage();
         if err != nil {
             log.Println("Read error : ", err);
+            active_conn[conn] = 0;
             break
         }
         realtime_msg <- string(message)
@@ -99,7 +100,10 @@ func HandleMessages(realtime_msg chan string, active_conn map[*websocket.Conn]in
 }
 
 func PushMessages(new_msg string, realtime_msg chan string, active_conn map[*websocket.Conn]int){
-    for ws := range active_conn{
+    for ws,value := range active_conn{
+        if value == 0{
+            continue
+        }
         err := ws.WriteMessage(websocket.TextMessage, []byte(new_msg));
         if err != nil {
             fmt.Println("Internal write error : ", err);
