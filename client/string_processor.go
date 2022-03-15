@@ -1,10 +1,10 @@
 /**********************************************************************************
-  ____ _     ___ ____ ___  ____  ____  
- / ___| |   |_ _/ ___/ _ \|  _ \|  _ \ 
+  ____ _     ___ ____ ___  ____  ____
+ / ___| |   |_ _/ ___/ _ \|  _ \|  _ \
 | |   | |    | | |  | | | | |_) | | | |
 | |___| |___ | | |__| |_| |  _ <| |_| |
- \____|_____|___\____\___/|_| \_\____/ 
-                                       
+ \____|_____|___\____\___/|_| \_\____/
+
 Copyright (c) 2021  CLICORD
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,31 +26,31 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 **********************************************************************************/
 
-package main 
+package main
 
 import (
-    "strings"
+	"strings"
 )
 
-func Fancyfier (msg string) string {
-    //As of writing this we only have emojis for fancy stuff in msg 
-    var ret_str string;
-    for index1 ,chars := range msg{
-        if chars == ':'{
-            for index2,chars2 := range msg[index1+1:]{
-                if chars2 == ':'{
-                    possible_alias := msg[index1+1:index1+index2+1]
+func Fancyfier(msg string) string {
+	//As of writing this we only have emojis for fancy stuff in msg
+	var ret_str string
+	for index1, chars := range msg {
+		if chars == ':' {
+			for index2, chars2 := range msg[index1+1:] {
+				if chars2 == ':' {
+					possible_alias := msg[index1+1 : index1+index2+1]
 
-                    if strings.ContainsAny(possible_alias , " "){
-                        break;
-                    }else if _,ok := glob_emoji_data[possible_alias] ; !ok{
-                        break
-                    }
-                    ret_str+=glob_emoji_data[possible_alias]
-                }
-            }
-        }
-        ret_str += string(chars)
-    }
-    return ret_str
+					if strings.ContainsAny(possible_alias, " ") {
+						break
+					} else if _, ok := glob_emoji_data[possible_alias]; !ok {
+						break
+					}
+					ret_str += glob_emoji_data[possible_alias]
+				}
+			}
+		}
+		ret_str += string(chars)
+	}
+	return ret_str
 }
