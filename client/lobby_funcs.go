@@ -66,7 +66,7 @@ func SendMessages(conn *websocket.Conn) {
 		scanner.Scan()
 		msg = scanner.Text()
 		msg_built := &MsgStruct{
-			Msg_content: msg,
+			Msg_content: Fancyfier(msg),
 			Username:    username_glob,
 		}
 		e, _ := json.Marshal(msg_built)
@@ -129,7 +129,7 @@ func PrintNode(list *List) {
 			log.Println("Something went wrong, Unmarshal err.")
 		}
 
-		fmt.Println(msgstruct.Username, ":", Fancyfier(msgstruct.Msg_content))
+		fmt.Println(msgstruct.Username, ":", msgstruct.Msg_content)
 		copy_nodes = copy_nodes.next
 	}
 }
