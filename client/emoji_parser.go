@@ -48,6 +48,7 @@ import (
 type emojis struct{
     Emoji string  `json : "emoji"`
     Aliases []string `json : "aliases"`
+    Tags []string `json : "tags"`
 } 
 
 func EmojiMapGenerator()(map[string]string , error) {
@@ -70,6 +71,9 @@ func EmojiMapGenerator()(map[string]string , error) {
         for _, aliases := range items.Aliases{
             r[aliases] = items.Emoji;
         }
+        for _,tags := range items.Tags{
+            r[tags] = items.Emoji
+        } 
     }
     return r,nil
 }
