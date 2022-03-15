@@ -130,7 +130,8 @@ func PrintNode(list *List){
         if marshal_err!=nil{
             log.Println("Something went wrong, Unmarshal err.");
         }
-        fmt.Println( msgstruct.Username,":",msgstruct.Msg_content);
+
+        fmt.Println( msgstruct.Username,":",Fancyfier(msgstruct.Msg_content));
         copy_nodes = copy_nodes.next;
     }
 }

@@ -73,7 +73,8 @@ var msg_list = &List{
 }
 
 var username_glob string
-  
+ 
+var glob_emoji_data map[string]string;
 
 //----------End of Globals----------
 
@@ -84,6 +85,8 @@ func main(){
         PingServer();
     }
     if args[1] == "lobby"{
+        emoji_data,_ := EmojiMapGenerator();
+        glob_emoji_data = emoji_data;
         var lobby_id = args[2];
         conn:= LobbyMain(lobby_id); //connection established in this function
         wait_group.Add(1);

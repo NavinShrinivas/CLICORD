@@ -10,9 +10,14 @@
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
 !_TAG_PROGRAM_VERSION	5.9.0	/p5.9.20210905.0/
 AddConn	server/lobby_funcs.go	/^func AddConn(conn *websocket.Conn, active_conn map[*websocket.Conn]int){$/;"	f	package:main
+Aliases	client/emoji_parser.go	/^    Aliases []string `json : "aliases"`$/;"	m	struct:main.emojis	typeref:typename:[]string
 AppendNode	client/lobby_funcs.go	/^func AppendNode(msg string, list *List){$/;"	f	package:main
 CLICORD	README.md	/^# CLICORD $/;"	c
 CreateOrFetch	server/lobby_funcs.go	/^func CreateOrFetch(lobby_id string) (chan string, map[*websocket.Conn]int){$/;"	f	package:main	typeref:typename:(chan string, map[*websocket.Conn]int)
+Creating a particular server/lobby for clients	README.md	/^### Creating a particular server\/lobby for clients$/;"	S	section:CLICORD""Features
+Emoji	client/emoji_parser.go	/^    Emoji string  `json : "emoji"`$/;"	m	struct:main.emojis	typeref:typename:string
+EmojiMapGenerator	client/emoji_parser.go	/^func EmojiMapGenerator()(map[string]string , error) {$/;"	f	package:main	typeref:typename:(map[string]string , error)
+Fancyfier	client/string_processor.go	/^func Fancyfier (msg string) string {$/;"	f	package:main	typeref:typename:string
 Features	README.md	/^## Features $/;"	s	chapter:CLICORD
 HandleMessages	server/lobby_funcs.go	/^func HandleMessages(realtime_msg chan string, active_conn map[*websocket.Conn]int){$/;"	f	package:main
 InitFunc	server/lobby_funcs.go	/^func InitFunc(w http.ResponseWriter, r *http.Request, realtime_msg chan string, active_conn map[/;"	f	package:main
@@ -35,12 +40,16 @@ Username	client/main.go	/^    Username string `json : "Username"`$/;"	m	struct:m
 active_conn	server/server.go	/^    active_conn map[*websocket.Conn]int$/;"	m	struct:main.LobbyData	typeref:typename:map[*websocket.Conn]int
 addr	client/main.go	/^var addr = flag.String("addr", "localhost:80", "http service address")$/;"	v	package:main
 addr	server/server.go	/^var addr = flag.String("addr", "0.0.0.0:80", "http service address")$/;"	v	package:main
+emojis	client/emoji_parser.go	/^type emojis struct{$/;"	s	package:main
+glob_emoji_data	client/main.go	/^var glob_emoji_data map[string]string;$/;"	v	package:main	typeref:typename:map[string]string
 head	client/main.go	/^    head *Node$/;"	m	struct:main.List	typeref:typename:*Node
 lobby_data	server/server.go	/^var lobby_data = make(map[string]*LobbyData); \/\/for n number of lobbies$/;"	v	package:main
+main	client/emoji_parser.go	/^package main $/;"	p
 main	client/lobby_funcs.go	/^package main$/;"	p
 main	client/main.go	/^func main(){$/;"	f	package:main
 main	client/main.go	/^package main$/;"	p
 main	client/ping_funcs.go	/^package main$/;"	p
+main	client/string_processor.go	/^package main $/;"	p
 main	server/lobby_funcs.go	/^package main $/;"	p
 main	server/ping_funcs.go	/^package main$/;"	p
 main	server/server.go	/^func main(){$/;"	f	package:main
