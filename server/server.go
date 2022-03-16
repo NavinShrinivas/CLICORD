@@ -54,7 +54,7 @@ var upgrader = websocket.Upgrader{
 //In theory uprage is an HTTP header that asks the client to comply with
 //HTTP standards, but it can ofc also be used to open connections.
 
-var addr = flag.String("addr", "0.0.0.0:80", "http service address")
+var addr = flag.String("addr", "0.0.0.0:8080", "http service address")
 
 //for port fwding : https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers
 

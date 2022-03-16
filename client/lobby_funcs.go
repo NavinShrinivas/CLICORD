@@ -50,7 +50,7 @@ func LobbyMain(lobby_id string) *websocket.Conn {
 	conn, _, err := websocket.DefaultDialer.Dial(url_obj.String(), nil)
 	fmt.Print("Connection Succesfull. Press ENTER to continue")
 	fmt.Scanln()
-	fmt.Print("\033c\n")
+	//fmt.Print("\033c\n")
 	if err != nil {
 		log.Print("Connection Error : ", err)
 	}
