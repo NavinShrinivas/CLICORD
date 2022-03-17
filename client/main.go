@@ -45,7 +45,7 @@ import (
 //----------globals----------
 
 // This address is the constatnt address for the server, and use in every function
-var addr = flag.String("addr", "0.0.0.0:8080", "http service address")
+var addr = flag.String("addr", "catss.me:8080", "http service address")
 
 //messgae structure, needs a lot more config to work.
 type MsgStruct struct {
