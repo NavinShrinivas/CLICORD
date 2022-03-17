@@ -1,7 +1,7 @@
 /**********************************************************************************
   ____ _     ___ ____ ___  ____  ____
  / ___| |   |_ _/ ___/ _ \|  _ \|  _ \
-| |   | |    | | |  | | | | |_) | | | |
+| | | |    | | |  | | | | |_) | | | |
 | |___| |___ | | |__| |_| |  _ <| |_| |
  \____|_____|___\____\___/|_| \_\____/
 
@@ -29,6 +29,7 @@ SOFTWARE.
 package main
 
 import (
+	"strconv"
 	"strings"
 )
 
@@ -53,4 +54,49 @@ func Fancyfier(msg string) string {
 		ret_str += string(chars)
 	}
 	return ret_str
+}
+
+func SlashFileFinder(msg string) (string, bool) {
+	if msg[0] != '/' {
+		return "", false
+	} else {
+		for index1, i := range msg {
+			if i == ' ' {
+				substr := msg[0:index1]
+				if substr == "/file" {
+					return msg[index1+1:], true
+				} else {
+					return "", false
+				}
+			}
+		}
+	}
+	return "", false
+}
+
+func SlashDonwloadFinder(msg string) (int, bool) {
+	if msg[0] != '/' {
+		return 0, false
+	} else {
+		for index1, i := range msg {
+			if i == ' ' {
+				substr := msg[0:index1]
+				if substr == "/store" {
+					val, _ := strconv.Atoi(msg[index1+1:])
+					return val, true
+				} else {
+					return 0, false
+				}
+			}
+		}
+	}
+	return 0, false
+}
+
+func IsSlashFinder(msg string) bool {
+	if msg[0] == '/' {
+		return true
+	} else {
+		return false
+	}
 }

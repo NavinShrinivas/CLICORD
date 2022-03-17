@@ -45,12 +45,16 @@ import (
 //----------globals----------
 
 // This address is the constatnt address for the server, and use in every function
-var addr = flag.String("addr", "catss.me:8080", "http service address")
+var addr = flag.String("addr", "0.0.0.0:8080", "http service address")
 
 //messgae structure, needs a lot more config to work.
 type MsgStruct struct {
-	Msg_content string `json : "Msg_content"`
-	Username    string `json : "Username"`
+	Msg_content  string `json : "Msg_content"`
+	File_content []byte `json : "File_content"`
+	Username     string `json : "Username"`
+	Is_file      bool   `json : "Is_file"`
+	File_name    string `json : "File_name"`
+	File_type    string `json : "File_type"`
 }
 
 //json library expects exported members of struct, hence capital starting
@@ -63,8 +67,9 @@ var wait_group sync.WaitGroup //for async functions, needs to be global
 //impl for these struct are not bound the the struct, this can and has to be done
 //evetually
 type Node struct {
-	Key  string
-	next *Node
+	File_id int
+	Key     string
+	next    *Node
 }
 type List struct {
 	head *Node
@@ -77,6 +82,8 @@ var msg_list = &List{
 var username_glob string
 
 var glob_emoji_data map[string]string
+
+var file_id_manager int = 0
 
 //----------End of Globals----------
 

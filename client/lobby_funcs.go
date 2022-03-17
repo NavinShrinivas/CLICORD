@@ -36,6 +36,7 @@ import (
 	"log"
 	"net/url"
 	"os"
+	"time"
 )
 
 func LobbyMain(lobby_id string) *websocket.Conn {
@@ -44,7 +45,6 @@ func LobbyMain(lobby_id string) *websocket.Conn {
 
 	fmt.Print("Enter user name : ")
 	fmt.Scanln(&username_glob)
-
 	url_obj := url.URL{Scheme: "ws", Host: *addr, Path: endpoint}
 	log.Print("Connection to : ", url_obj, ".... Trying to connect to ", lobby_id, " \n")
 	conn, _, err := websocket.DefaultDialer.Dial(url_obj.String(), nil)
@@ -65,14 +65,51 @@ func SendMessages(conn *websocket.Conn) {
 		scanner := bufio.NewScanner(os.Stdin)
 		scanner.Scan()
 		msg = scanner.Text()
-		msg_built := &MsgStruct{
-			Msg_content: Fancyfier(msg),
-			Username:    username_glob,
+		is_slash := IsSlashFinder(msg)
+		file_path, is_file := SlashFileFinder(msg)
+		file_id, is_download_commands := SlashDonwloadFinder(msg)
+		var e []byte
+		if is_slash && is_download_commands {
+			fmt.Println("Donwloading file", file_id)
+			FileDownloader(file_id)
+			time.Sleep(3 * time.Second)
+			continue
+
+		} else if is_slash && is_file {
+			file_type, file_name := FileUtils(file_path)
+			fmt.Println("File name:", file_name, "File type:", file_type)
+			file_content := FileAsByte(file_path)
+			if file_content == nil {
+				continue
+			}
+
+			msg_built := &MsgStruct{
+				Msg_content:  "",
+				File_content: file_content,
+				Username:     username_glob,
+				Is_file:      true,
+				File_name:    file_name,
+				File_type:    file_type,
+			}
+			e, _ = json.Marshal(msg_built)
+		} else if !is_slash {
+			msg_built := &MsgStruct{
+				Msg_content:  Fancyfier(msg),
+				File_content: nil,
+				Username:     username_glob,
+				Is_file:      false,
+				File_name:    "",
+				File_type:    "",
+			}
+			e, _ = json.Marshal(msg_built)
+		} else {
+			fmt.Println("Hahah, nice try! Stop tring to break me :)")
+			time.Sleep(3 * time.Second)
+			continue
 		}
-		e, _ := json.Marshal(msg_built)
 
 		//like C, go has problems with spaces in input as well
-		err := conn.WriteMessage(websocket.TextMessage, []byte(e))
+		err := conn.WriteMessage(websocket.TextMessage, e)
 		if err != nil {
 			fmt.Println("Something went wrong on our end. May be you are giving really weird chars?")
 			wait_group.Done()
@@ -96,16 +133,16 @@ func RecieveMessages(conn *websocket.Conn) {
 	}
 }
 
-//If we have better DB we maybe able to scrape these funs off:
-
 func AppendNode(msg string, list *List) {
 
 	//Can be rewritten so much better, But it does get the job done
+	file_id_manager += 1
 	var copy_list = list
 	if copy_list.head == nil {
 		copy_list.head = &Node{
-			Key:  msg,
-			next: nil,
+			Key:     msg,
+			next:    nil,
+			File_id: file_id_manager,
 		}
 		return
 	}
@@ -114,8 +151,9 @@ func AppendNode(msg string, list *List) {
 		copy_nodes = copy_nodes.next
 	}
 	copy_nodes.next = &Node{
-		Key:  msg,
-		next: nil,
+		Key:     msg,
+		next:    nil,
+		File_id: file_id_manager,
 	}
 }
 
@@ -128,8 +166,12 @@ func PrintNode(list *List) {
 		if marshal_err != nil {
 			log.Println("Something went wrong, Unmarshal err.")
 		}
+		if msgstruct.Is_file {
+			fmt.Printf("%s : [%d] %s%s \n", msgstruct.Username, copy_nodes.File_id, msgstruct.File_name, msgstruct.File_type)
 
-		fmt.Println(msgstruct.Username, ":", msgstruct.Msg_content)
+		} else {
+			fmt.Println(msgstruct.Username, ":", msgstruct.Msg_content)
+		}
 		copy_nodes = copy_nodes.next
 	}
 }
