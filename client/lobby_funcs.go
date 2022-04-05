@@ -54,6 +54,7 @@ func LobbyMain(lobby_id string) *websocket.Conn {
 	if err != nil {
 		log.Print("Connection Error : ", err)
 	}
+    TUI_Init()
 	return conn
 }
 

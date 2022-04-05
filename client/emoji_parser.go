@@ -61,7 +61,7 @@ func EmojiMapGenerator() (map[string]string, error) {
 	}
 	json_err := json.Unmarshal([]byte(json_str), &emojimap)
 	if json_err != nil {
-		fmt.Println("Something went wrong parsing to JSON, you sure you haven'tmodified our JSON file?")
+		fmt.Println("Something went wrong parsing to JSON, you sure you haven't modified our JSON file?")
 		return nil, json_err
 	}
 	r := make(map[string]string)
